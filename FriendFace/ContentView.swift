@@ -8,9 +8,23 @@
 import SwiftUI
 
 struct ContentView: View {
+    @ObservedObject var people = Users()
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        NavigationView {
+            List {
+                ForEach(people.users) { user in
+                    NavigationLink(destination: DetailUserView(people: people, user: user)) {
+                        VStack(alignment: .leading){
+                            Text("\(user.name)")
+                                .font(.headline)
+                            Text("Friend count: \(user.friends.count)")
+                        }
+                    }
+                }
+            }
+            .navigationTitle("FriendFace")
+        }
     }
 }
 
